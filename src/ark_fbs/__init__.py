@@ -1,2 +1,2 @@
-from ._flatbuffers_idl import *  # type: ignore
+from ._ark_fbs import *  # type: ignore
 

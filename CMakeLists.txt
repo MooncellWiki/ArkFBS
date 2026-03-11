@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
-project(flatbuffers_idl_python LANGUAGES CXX)
+project(ark_fbs_python LANGUAGES CXX)
 
-option(FLATBUFFERS_IDL_VENDOR_FLATBUFFERS "Build with vendored flatbuffers source" ON)
-set(FLATBUFFERS_IDL_FLATBUFFERS_SOURCE_DIR "" CACHE PATH
+option(ARK_FBS_VENDOR_FLATBUFFERS "Build with vendored flatbuffers source" ON)
+set(ARK_FBS_FLATBUFFERS_SOURCE_DIR "" CACHE PATH
     "Path to flatbuffers source dir (alternative to third_party/flatbuffers)")
 
 set(CMAKE_CXX_STANDARD 14)
@@ -10,13 +10,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(pybind11 CONFIG REQUIRED)
 
-if(FLATBUFFERS_IDL_VENDOR_FLATBUFFERS)
+if(ARK_FBS_VENDOR_FLATBUFFERS)
   # Expect the user's fork of flatbuffers as a submodule/subdir.
   # Layout:
   #   third_party/flatbuffers/ (contains include/, src/, CMakeLists.txt, ...)
   set(_fb_src "")
-  if(FLATBUFFERS_IDL_FLATBUFFERS_SOURCE_DIR)
-    set(_fb_src "${FLATBUFFERS_IDL_FLATBUFFERS_SOURCE_DIR}")
+  if(ARK_FBS_FLATBUFFERS_SOURCE_DIR)
+    set(_fb_src "${ARK_FBS_FLATBUFFERS_SOURCE_DIR}")
   elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/flatbuffers/CMakeLists.txt")
     set(_fb_src "${CMAKE_CURRENT_SOURCE_DIR}/third_party/flatbuffers")
   elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../CMakeLists.txt")
@@ -59,17 +59,17 @@ else()
   find_package(Flatbuffers REQUIRED)
 endif()
 
-pybind11_add_module(_flatbuffers_idl MODULE
+pybind11_add_module(_ark_fbs MODULE
   cpp/flatbuffers_idl.cpp
 )
 
 if(TARGET flatbuffers)
-  target_link_libraries(_flatbuffers_idl PRIVATE flatbuffers)
+  target_link_libraries(_ark_fbs PRIVATE flatbuffers)
 elseif(TARGET flatbuffers::flatbuffers)
-  target_link_libraries(_flatbuffers_idl PRIVATE flatbuffers::flatbuffers)
+  target_link_libraries(_ark_fbs PRIVATE flatbuffers::flatbuffers)
 endif()
 
-install(TARGETS _flatbuffers_idl
+install(TARGETS _ark_fbs
   LIBRARY DESTINATION ark_fbs
   RUNTIME DESTINATION ark_fbs
   ARCHIVE DESTINATION ark_fbs

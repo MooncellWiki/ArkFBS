@@ -143,7 +143,7 @@ class Schema {
 
 }  // namespace
 
-PYBIND11_MODULE(_flatbuffers_idl, m) {
+PYBIND11_MODULE(_ark_fbs, m) {
   m.doc() = "FlatBuffers schema parsing + JSON<->binary helpers (C++ Parser)";
 
   py::class_<Options>(m, "Options")

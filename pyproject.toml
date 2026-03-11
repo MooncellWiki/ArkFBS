@@ -37,7 +37,7 @@ cmake.build-type = "Release"
 wheel.packages = ["src/ark_fbs"]
 
 [tool.scikit-build.cmake.define]
-FLATBUFFERS_IDL_VENDOR_FLATBUFFERS = "ON"
+ARK_FBS_VENDOR_FLATBUFFERS = "ON"
 
 [tool.cibuildwheel]
 build = "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-*"
