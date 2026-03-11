@@ -37,16 +37,19 @@ if(ARK_FBS_VENDOR_FLATBUFFERS)
   set(FLATBUFFERS_INSTALL OFF CACHE BOOL "" FORCE)
   add_subdirectory("${_fb_src}" flatbuffers-build)
 
-  # Relax flatbuffers' strict unused-parameter warnings in our build without
-  # patching the vendored sources.
+  # Relax flatbuffers' strict warnings in our build without patching vendored sources.
+  # Use an interface library so our flags are applied after ProjectConfig (last wins).
+  add_library(flatbuffers_warning_relax INTERFACE)
+  target_compile_options(flatbuffers_warning_relax INTERFACE
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
+      -Wno-error=unused-parameter
+      -Wno-error=missing-declarations
+    >
+  )
   if(TARGET flatbuffers)
-    target_compile_options(flatbuffers PRIVATE
-      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:-Wno-error=unused-parameter>
-    )
+    target_link_libraries(flatbuffers PRIVATE flatbuffers_warning_relax)
   elseif(TARGET flatbuffers::flatbuffers)
-    target_compile_options(flatbuffers::flatbuffers PRIVATE
-      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:-Wno-error=unused-parameter>
-    )
+    target_link_libraries(flatbuffers::flatbuffers PRIVATE flatbuffers_warning_relax)
   endif()
 
   # Provide mandatory nlohmann/json header for our fork's idl_gen_text.cpp.
