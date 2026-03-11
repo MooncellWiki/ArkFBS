@@ -37,6 +37,18 @@ if(ARK_FBS_VENDOR_FLATBUFFERS)
   set(FLATBUFFERS_INSTALL OFF CACHE BOOL "" FORCE)
   add_subdirectory("${_fb_src}" flatbuffers-build)
 
+  # Relax flatbuffers' strict unused-parameter warnings in our build without
+  # patching the vendored sources.
+  if(TARGET flatbuffers)
+    target_compile_options(flatbuffers PRIVATE
+      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:-Wno-error=unused-parameter>
+    )
+  elseif(TARGET flatbuffers::flatbuffers)
+    target_compile_options(flatbuffers::flatbuffers PRIVATE
+      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:-Wno-error=unused-parameter>
+    )
+  endif()
+
   # Provide mandatory nlohmann/json header for our fork's idl_gen_text.cpp.
   # We expect a single-header drop at: third_party/nlohmann_json/nlohmann/json.hpp
   if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/nlohmann_json/nlohmann/json.hpp")
