@@ -38,22 +38,22 @@ if(FLATBUFFERS_IDL_VENDOR_FLATBUFFERS)
   add_subdirectory("${_fb_src}" flatbuffers-build)
 
   # Provide mandatory nlohmann/json header for our fork's idl_gen_text.cpp.
-  # We expect it as a git submodule at third_party/nlohmann_json.
-  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/nlohmann_json/single_include/nlohmann/json.hpp")
+  # We expect a single-header drop at: third_party/nlohmann_json/nlohmann/json.hpp
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/nlohmann_json/nlohmann/json.hpp")
     if(TARGET flatbuffers)
       target_include_directories(flatbuffers PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/nlohmann_json/single_include"
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/nlohmann_json"
       )
     elseif(TARGET flatbuffers::flatbuffers)
       target_include_directories(flatbuffers::flatbuffers PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/nlohmann_json/single_include"
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/nlohmann_json"
       )
     endif()
   else()
     message(FATAL_ERROR
-      "Missing third_party/nlohmann_json submodule.\n"
-      "Run: git submodule add https://github.com/nlohmann/json.git third_party/nlohmann_json\n"
-      "and ensure submodules are checked out with --recursive.")
+      "Missing nlohmann/json headers.\n"
+      "Expected: third_party/nlohmann_json/nlohmann/json.hpp\n"
+    )
   endif()
 else()
   find_package(Flatbuffers REQUIRED)
