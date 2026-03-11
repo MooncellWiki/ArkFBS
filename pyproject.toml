@@ -34,7 +34,7 @@ dev = [
 [tool.scikit-build]
 cmake.minimum-version = "3.15"
 cmake.build-type = "Release"
-wheel.packages = ["src/flatbuffers_idl"]
+wheel.packages = ["src/ark_fbs"]
 
 [tool.scikit-build.cmake.define]
 FLATBUFFERS_IDL_VENDOR_FLATBUFFERS = "ON"
@@ -42,7 +42,7 @@ FLATBUFFERS_IDL_VENDOR_FLATBUFFERS = "ON"
 [tool.cibuildwheel]
 build = "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-*"
 skip = "pp* *-musllinux_*"
-test-command = "python -c \"import flatbuffers_idl; s=flatbuffers_idl.Schema.from_fbs_text('namespace t; table A { x:int; } root_type A;'); b=s.json_to_binary('{\\\"x\\\":1}'); j=s.binary_to_json(b); assert '\"x\"' in j\""
+test-command = "python -c \"import ark_fbs; s=ark_fbs.Schema.from_fbs_text('namespace t; table A { x:int; } root_type A;'); b=s.json_to_binary('{\\\"x\\\":1}'); j=s.binary_to_json(b); assert '\"x\"' in j\""
 
 [tool.cibuildwheel.linux]
 manylinux-x86_64-image = "manylinux_2_28"

@@ -10,7 +10,7 @@ This is a standalone PyPI package that provides a thin `pybind11` wrapper around
 ## Repo layout
 
 - `cpp/`: C++ binding source (pybind11)
-- `src/flatbuffers_idl/`: Python package wrapper + typing stubs
+- `src/ark_fbs/`: Python package wrapper + typing stubs
 - `third_party/flatbuffers/`: **your fork** of FlatBuffers as a git submodule (recommended)
 
 ## Local build (editable)
@@ -23,9 +23,9 @@ uv pip install -e .
 ## Usage
 
 ```python
-import flatbuffers_idl
+import ark_fbs
 
-s = flatbuffers_idl.Schema.from_fbs_text(
+s = ark_fbs.Schema.from_fbs_text(
     "namespace t; table A { x:int; } root_type A;"
 )
 b = s.json_to_binary('{"x":1}')

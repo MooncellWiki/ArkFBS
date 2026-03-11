@@ -70,8 +70,8 @@ elseif(TARGET flatbuffers::flatbuffers)
 endif()
 
 install(TARGETS _flatbuffers_idl
-  LIBRARY DESTINATION flatbuffers_idl
-  RUNTIME DESTINATION flatbuffers_idl
-  ARCHIVE DESTINATION flatbuffers_idl
+  LIBRARY DESTINATION ark_fbs
+  RUNTIME DESTINATION ark_fbs
+  ARCHIVE DESTINATION ark_fbs
 )
 
