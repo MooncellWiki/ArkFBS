@@ -1,4 +1,4 @@
-## flatbuffers-idl (Python)
+# Ark FBS
 
 This is a standalone PyPI package that provides a thin `pybind11` wrapper around
 `flatbuffers::Parser` and `GenerateText`:
@@ -7,13 +7,13 @@ This is a standalone PyPI package that provides a thin `pybind11` wrapper around
 - JSON -> FlatBuffer binary
 - FlatBuffer binary -> JSON
 
-### Repo layout
+## Repo layout
 
 - `cpp/`: C++ binding source (pybind11)
 - `src/flatbuffers_idl/`: Python package wrapper + typing stubs
 - `third_party/flatbuffers/`: **your fork** of FlatBuffers as a git submodule (recommended)
 
-### Local build (editable)
+## Local build (editable)
 
 ```bash
 python -m pip install -U pip
@@ -21,7 +21,7 @@ python -m pip install -U build scikit-build-core pybind11
 python -m pip install -e .
 ```
 
-### Usage
+## Usage
 
 ```python
 import flatbuffers_idl
@@ -37,4 +37,3 @@ print(s.binary_to_json(b))
 
 CI uses `cibuildwheel` to produce wheels for multiple CPython versions and
 architectures. See `.github/workflows/wheels.yml`.
-
