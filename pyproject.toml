@@ -17,13 +17,10 @@ classifiers = [
 "Bug Tracker" = "https://github.com/MooncellWiki/ArkFBS/issues"
 
 [dependency-groups]
-dev = [
-  "ruff >=0.15.0, <0.16.0",
-  "pre-commit >=4.0.0, <5.0.0",
-]
+dev = ["ruff >=0.15.0, <0.16.0", "pre-commit >=4.0.0, <5.0.0"]
 
 [tool.scikit-build]
-cmake.version = ">=3.15"
+cmake.version = ">=3.32"
 cmake.build-type = "Release"
 wheel.packages = ["src/ark_fbs"]
 
@@ -40,8 +37,5 @@ archs = ["x86_64", "arm64"]
 archs = ["AMD64", "x86", "ARM64"]
 
 [build-system]
-requires = [
-  "scikit-build-core >=0.12",
-  "pybind11 >=3.0",
-]
+requires = ["scikit-build-core >=0.12", "pybind11 >=3.0"]
 build-backend = "scikit_build_core.build"

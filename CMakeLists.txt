@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.32)
 project(ark_fbs_python LANGUAGES CXX)
 
 option(ARK_FBS_VENDOR_FLATBUFFERS "Build with vendored flatbuffers source" ON)
