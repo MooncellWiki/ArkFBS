@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.32)
 project(ark_fbs_python LANGUAGES CXX)
 
 option(ARK_FBS_VENDOR_FLATBUFFERS "Build with vendored flatbuffers source" ON)
@@ -7,6 +7,19 @@ set(ARK_FBS_FLATBUFFERS_SOURCE_DIR "" CACHE PATH
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# CMake >= 3.30 excludes free-threaded Python (gil_disabled) from FindPython by
+# default. scikit-build-core fails to pass this flag in Windows cross-compile
+# scenarios (e.g. AMD64 host building ARM64 cp314t wheels), so the library is
+# looked up as python314.lib instead of python314t.lib. Detect via SKBUILD_SOABI
+# (set by scikit-build-core before CMake runs) and opt in explicitly.
+if(DEFINED SKBUILD_SOABI)
+  string(REGEX MATCH "cp[0-9]+t-" _is_free_threaded "${SKBUILD_SOABI}")
+  if(_is_free_threaded)
+    set(Python_FIND_ABI "ANY" "ANY" "ANY" "ON")
+  endif()
+  unset(_is_free_threaded)
+endif()
 
 set(PYBIND11_FINDPYTHON ON)
 find_package(pybind11 CONFIG REQUIRED)
