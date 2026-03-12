@@ -35,7 +35,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: [build_sdist]
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [windows-latest, macos-latest]
 
