@@ -15,36 +15,6 @@ This is a standalone PyPI package that provides a thin `pybind11` wrapper around
 python -m pip install -U ark-fbs
 ```
 
-### Install from source
-
-This repo vendors FlatBuffers source (recommended) and requires an extra header-only
-dependency for your FlatBuffers fork.
-
-Prerequisites:
-
-- Python \(\ge\) 3.10
-- A C++ toolchain (C++14) + CMake \(\ge\) 3.32
-- Git (to fetch submodules)
-
-```bash
-git clone --recurse-submodules <your-repo-url>
-cd ark_fbs
-
-# Ensure the expected deps exist
-# - third_party/flatbuffers/ (git submodule)
-# - third_party/nlohmann_json/nlohmann/json.hpp
-
-python -m pip install -U pip
-python -m pip install -U build
-python -m pip install .
-```
-
-If you don't want to use the vendored FlatBuffers source, you can build against a
-system/externally provided FlatBuffers by configuring CMake with:
-
-- `ARK_FBS_VENDOR_FLATBUFFERS=OFF` (then `find_package(Flatbuffers REQUIRED)` is used), or
-- `ARK_FBS_FLATBUFFERS_SOURCE_DIR=/path/to/flatbuffers` (when vendor mode is ON)
-
 ## Repo layout
 
 - `cpp/`: C++ binding source (pybind11)
